@@ -33,11 +33,11 @@ function main() {
     jumpToIndex();
 
     while (totalNewsReaded < totalNewsOneTime && retry < 3) {
-        // toastLog('获取时段奖励');
-        // getTimeAward();
         checkClose();
         toastLog('开始刷新');
         jumpToIndex();
+        toastLog('获取时段奖励');
+        getTimeAward();
         isFresh = false;
         var scrollRetry = 0;
         // 判断是否找到上次刷新的地方,重试3次

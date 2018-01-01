@@ -2,11 +2,12 @@ const commons = require('common.js');
 
 "auto";
 var appName = '波波视频';
-var totalNewsOneTime = 30;
+var totalNewsOneTime = 20;
 var totalNewsReaded = 0;
 var retry = 0;
 var closeTexts = [];
 var closeIds = ['aeo'];
+var activity = 'com.kg.v1.MainActivity';
 
 function main() {
     commons.wakeUp();
@@ -15,13 +16,15 @@ function main() {
     checkClose();
     toastLog('签到');
     // signIn();
-    sleep(1000 * random(1, 2));
+    // sleep(1000 * random(1, 2));
     while (totalNewsReaded < totalNewsOneTime && retry < 3) {
         toastLog('开始刷新');
+        checkClose();
         jumpToIndex();
+        getTimeAward();
+        checkClose();
         sleep(1000 * random(1, 2));
         toastLog('获取时段奖励');
-        checkClose();
         sleep(1000 * random(1, 2));
         readNews();
         scrollDown(1);
@@ -51,6 +54,7 @@ function main() {
                 break;
             }
         }
+        commons.checkActivity(activity);
     }
 
     function jumpToIndex() {
@@ -65,7 +69,7 @@ function main() {
         if (sign) {
             sign.click();
             sleep(1000 * random(1, 2))
-            commons.checkActivity('com.cashvideo.MainTabActivity');
+            checkClose();
         }
         sleep(350 * random(1, 2));
         jumpToIndex();
@@ -85,6 +89,15 @@ function main() {
         }
     }
 
+    function getTimeAward() {
+        var timeAward = id('a8t').text('免费领').findOnce();
+        if (timeAward) {
+            timeAward.parent().click();
+            sleep(350 * random(1, 2))
+            back();
+        }
+    }
+
     function getAward() {
         var user = id('akf').findOnce();
         if (user) {
@@ -95,8 +108,10 @@ function main() {
             if (award) {
                 award.click();
                 sleep(1000 * random(1, 2))
+                text('一键领取').waitFor();
                 award = text('一键领取').findOnce();
                 award.click();
+                sleep(350 * random(1, 3));
                 back();
             }
         }
@@ -119,12 +134,13 @@ function main() {
             ele.child(0).click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            sleep(5 * 1000);
+            sleep(1000 * random(3, 5));
             commons.centerClick(ele);
+            sleep(100 * random(1, 3))
             var t = id('att').findOnce();
             if (t) {
                 t.click();
-                sleep(60 * 1000 * random(1, 3))
+                sleep(60 * 1000 * random(1, 5))
                 back();
             }
             checkClose()

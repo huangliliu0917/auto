@@ -6,6 +6,7 @@ var totalNewsOneTime = 20;
 var totalNewsReaded = 0;
 var retry = 0;
 var readTitleArray = [];
+var activty = 'com.huanxi.toutiao.ui.activity.other.MainActivity'
 
 function main() {
     commons.wakeUp();
@@ -18,6 +19,7 @@ function main() {
         checkClose();
         toastLog('开始刷新');
         jumpToIndex();
+        getTimeAward();
         sleep(1000 * random(1, 2));
         readNews();
         sleep(300);
@@ -30,8 +32,26 @@ function main() {
     function checkClose() {
         var close = id('tv_gold_number').findOnce();
         if (close) {
+            toastLog('关闭提示');
             back();
             sleep(1000);
+        }
+        commons.checkActivity(activty);
+    }
+
+    function getTimeAward() {
+        var timeAward = id('tv_timer').text('领取').findOnce();
+        // toastLog(timeAward);
+        if (timeAward) {
+            timeAward.parent().click();
+            sleep(350 * random(1, 3));
+            var red = text('立即拆红包').findOnce();
+            if (red) {
+                red.parent().click();
+                sleep(350 * random(1, 3));
+                checkClose();
+            }
+            jumpToIndex();
         }
     }
 
@@ -59,6 +79,7 @@ function main() {
 
 
     function jumpToIndex() {
+        checkClose();
         var task = text('任务').findOnce();
         var tab = task.parent().parent().parent();
         tab.child(0).click();

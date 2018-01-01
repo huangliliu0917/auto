@@ -4,9 +4,10 @@ const commons = require('common.js');
 var appName = '搜狐资讯';
 var indexBtnText = "首页"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新"; //首页特有的标志文字，重要！
-var totalNewsOneTime = 20;
+var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
-var homeActivity = 'com.sohu.quicknews.homeModel.activity.HomeActivity'
+var activity = 'com.sohu.quicknews.homeModel.activity.HomeActivity'
+var readTitleArray = [];
 
 var closeIds = ['btn_receive']
 
@@ -42,7 +43,7 @@ function main() {
             }
         }
         sleep(1000);
-        commons.checkActivity(homeActivity);
+        commons.checkActivity(activity);
     }
 
     function signIn() {
@@ -52,6 +53,10 @@ function main() {
             user.click();
             sleep(1 * 1000)
             var tasks = id('task_entrance_gv').findOnce();
+            if (!tasks) {
+                toastLog('没有找到任务');
+                return;
+            }
             var sign = tasks.child(0);
             sign.click();
             sleep(1 * 1000)
@@ -69,7 +74,6 @@ function main() {
     }
 
     function readNews() {
-        sleep(1000 * random(1, 2));
         var eles = className("android.support.v7.widget.RecyclerView").findOnce();
         if (!eles) {
             toastLog('未找到文章');
@@ -80,16 +84,34 @@ function main() {
             checkClose();
             var ele = eles.child(i);
             if (!ele) continue;
-            if (!ele.clickable()) {
-                toastLog('跳过');
-                continue;
-            }
-            var red = id('energy_open').findOnce();
+            var red = ele.findOne(id('energy_open'));
             if (red) {
                 toastLog('获取奖励');
                 checkClose();
                 red.click();
                 sleep(1000);
+                continue;
+            }
+            var isAd = ele.findOne(text('广告'));
+            if (isAd) {
+                toastLog('跳过广告');
+                continue;
+            }
+            var title = ele.findOne(id('article_title'));
+            if (title) {
+                toastLog(title.text());
+                if (readTitleArray.indexOf(title.text()) == -1) {
+                    readTitleArray.push(title.text())
+                } else {
+                    toastLog('已看过');
+                    continue;
+                }
+            } else {
+                toastLog('未找到标题');
+                continue;
+            }
+            if (!ele.clickable()) {
+                toastLog('跳过');
                 continue;
             }
             ele.click();

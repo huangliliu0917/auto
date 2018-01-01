@@ -19,6 +19,7 @@ function main() {
         checkClose();
         jumpToIndex();
         toastLog('开始刷新');
+        getTimeAward();
         sleep(200);
         readNews();
         sleep(300);
@@ -47,6 +48,16 @@ function main() {
         }
         sleep(1000);
         // commons.checkActivity(homeActivity);
+    }
+
+    function getTimeAward() {
+        var timeAward = text('领取').findOnce();
+        if (timeAward) {
+            timeAward.parent().click();
+            sleep(3000);
+            sleep(350 * random(1, 3));
+            checkClose();
+        }
     }
 
     function signIn() {

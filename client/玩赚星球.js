@@ -2,7 +2,7 @@ const commons = require('common.js');
 
 "auto";
 var appName = '玩赚星球';
-var totalNewsOneTime = 20;
+var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
 
 var closeIds = ['iv_delete_lottie', 'iv_delete', 'iv_close'];

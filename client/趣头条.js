@@ -43,6 +43,10 @@ function main() {
 
     function signIn() {
         var task = id('jw').findOnce();
+        if (!task) {
+            toastLog('没有找到任务');
+            return;
+        }
         task.click();
         sleep(1000 * random(1, 2));
         var isClose = id('aeg').findOnce();

@@ -18,11 +18,12 @@ function main() {
     toastLog('签到');
     signIn();
     while (totalNewsReaded < totalNewsOneTime && retry < 3) {
-        jumpToIndex();
-        toastLog('开始刷新');
-        sleep(1000 * random(1, 2));
         checkClose();
-        // 红包
+        toastLog('开始刷新');
+        jumpToIndex();
+        sleep(1000 * random(1, 2));
+        toastLog('领取时段奖励')
+        getTimeAward();
         sleep(200);
         readNews();
         sleep(300);
@@ -42,6 +43,16 @@ function main() {
                 isClose.click();
                 break;
             }
+        }
+    }
+
+    function getTimeAward() {
+        var timeAward = text('领取').findOnce();
+        if (timeAward) {
+            timeAward.parent().click();
+            sleep(3000);
+            back();
+            checkClose();
         }
     }
 
