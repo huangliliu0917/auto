@@ -93,7 +93,7 @@ function main() {
         var ele = className("android.widget.Image").text("gold").findOne().parent();
         var award = ele.child(5);
         todayAward = parseInt(award.text().replace(',', ''));
-        if (lastTodayAward != 0 && lastTodayAward >= todayAward) {
+        if (lastTodayAward != 0 && lastTodayAward >= todayAward - 9) {
             var totalAward = parseFloat(ele.child(1).child(1).text());
             commons.report(todayAward, totalAward * 10000);
             toastLog('今天金币已领完');

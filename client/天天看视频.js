@@ -37,7 +37,7 @@ function main() {
                 }
                 sleep(350 * random(1, 2));
                 // 关注
-                if (random(0, 2) < 1) {
+                if (random(0, 5) < 1) {
                     var share = id('layout_recvideo_share').findOnce();
                     if (share) {
                         share.click();

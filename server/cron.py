@@ -14,20 +14,17 @@ date = now.strftime('%Y%m%d')
 
 def sendToWX():
     key = 'SCU53613T74bdd3a5e5ff2eb57218f74f71d495965d0711a8483e7'
-    name = '昨日汇总'
+    name = '{}汇总'.format(date)
     text = ''
     selector = {'date': date}
     eles = db.reading.find(selector).sort([('award', -1)])
+    lastDayCount = 0
     for ele in eles:
-        name = ele.get('package_name', '')
         todayAward = ele.get('today_award', 0)
-        award = ele.get('award', 0)
-        line = '{} - {} - {}'.format(name, todayAward, award)
-        text = text + line
+        lastDayCount += todayAward
+    print(lastDayCount)
 
-    res = requests.get("https://sc.ftqq.com/{}.send?text={}&desp={}".format(key, name, text))
-    print(text)
-    print(res.content)
+    res = requests.get("https://sc.ftqq.com/{}.send?text={}&desp={}".format(key, name, lastDayCount))
 
 
 
