@@ -1,0 +1,28 @@
+{
+    "newsAppList":[
+        {
+            "name":"西瓜视频",
+            "version":1
+        },
+        {
+            "name":"趣头条",
+            "url": "http://api.1sapp.com/app/download",
+            "version":1
+        }
+        {
+            "name":"中青看点",
+            "version":1
+        },
+        {
+            "name":"同花顺",
+            "version":1
+        },
+        {
+            "name":"抖音短视频",
+            "version":1
+        },
+    ],
+    "videoAppList":[
+
+    ]
+}

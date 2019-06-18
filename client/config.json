@@ -1,0 +1,62 @@
+{
+    "newsAppList": [
+        {
+            "name": "天天看视频",
+            "version": 1
+        },
+        {
+            "name": "东方头条",
+            "package": "com.songheng.eastnews",
+            "version": 1
+        },
+        {
+            "name": "蚂蚁看点",
+            "package": "com.ldzs.zhangxin",
+            "version": 1
+        },
+        {
+            "name": "惠头条",
+            "package": "com.cashtoutiao",
+            "version": 1
+        },
+        {
+            "name": "中青看点",
+            "package": "cn.youth.news",
+            "version": 1
+        },
+        {
+            "name": "刷宝短视频",
+            "package": "com.jm.video",
+            "version": 1
+        }
+    ],
+    "videoAppList": [
+        {
+        "name": "趣头条",
+        "package": "com.jifen.qukan",
+        "version": 1
+        }
+    ],
+    "dayTaskList": [
+        {
+            "name": "day_task",
+            "hour": 0.1
+        },
+        {
+            "name": "趣头条",
+            "package": "com.jifen.qukan",
+            "version": 1,
+            "hour": 24
+        },
+        {
+            "name": "火山极速版",
+            "version": 1,
+            "hour": 24
+        },
+        {
+            "name": "今日头条极速版",
+            "version": 1,
+            "hour": 24
+        }
+    ]
+}
