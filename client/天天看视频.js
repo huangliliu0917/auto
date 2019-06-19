@@ -2,7 +2,7 @@ const commons = require('common.js');
 
 var appName = '天天看视频';
 var totalNewsReaded = 1; //已经阅读的新闻条数
-var totalNewsOneTime = 27; //一次性阅读多少条新闻
+var totalNewsOneTime = 9; //一次性阅读多少条新闻
 
 function main() {
     // app.launch("com.jm.video");
