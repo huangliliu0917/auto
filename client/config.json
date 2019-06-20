@@ -1,6 +1,10 @@
 {
     "newsAppList": [
         {
+            "name": "微鲤看看",
+            "version": 1
+        },
+        {
             "name": "天天看视频",
             "version": 1
         },
@@ -17,6 +21,10 @@
         {
             "name": "惠头条",
             "package": "com.cashtoutiao",
+            "version": 1
+        },
+        {
+            "name": "惠视频",
             "version": 1
         },
         {

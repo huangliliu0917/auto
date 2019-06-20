@@ -4,9 +4,10 @@ const commons = require('common.js');
 var appName = '惠视频';
 var indexBtnText = "首页"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "首页";//首页特有的标志文字，重要！
-var totalNewsOneTime = 9;
+var totalNewsOneTime = 12;
 var totalNewsReaded = 0;
 var retry = 0;
+var closeTexts = ['忽略', '忽  略', '继续赚钱'];
 
 var w = device.width,
     h = device.height;
@@ -17,7 +18,7 @@ function main() {
     sleep(1000 * random(1, 2));
     checkClose();
     toastLog('签到');
-    signIn();
+    // signIn();
     sleep(1000 * random(1, 2));
     while (totalNewsReaded < totalNewsOneTime && retry < 3) {
         toastLog('开始刷新');
@@ -25,6 +26,7 @@ function main() {
         sleep(1000 * random(1, 2));
         toastLog('获取时段奖励');
         getTimeAward();
+        checkClose();
         sleep(1000 * random(1, 2));
         readNews();
         scrollDown(1);
@@ -37,6 +39,16 @@ function main() {
         if (isClose) {
             isClose.click();
             return;
+        }
+        for (i = 0; i < closeTexts.length; i++) {
+            var closeText = closeTexts[i];
+            var isClose = text(closeText).findOnce()
+            if (isClose) {
+                toastLog('关闭提示');
+                sleep(1000);
+                isClose.click();
+                break;
+            }
         }
     }
 
@@ -64,33 +76,7 @@ function main() {
         if (sign) {
             sign.click();
             sleep(1000 * random(1, 2))
-            // var isWait = id('content').findOne();
-            var isWait = text('领取中...').findOnce();
-            if (isWait) {
-                toastLog('等待');
-                back();
-                sleep(350 * random(1, 2))
-            }
-            var back = id('tv_back').findOnce();
-            if (back) {
-                back.click()
-                sleep(350 * random(1, 2))
-            }
-            var back = id('iv_back').findOnce();
-            if (back) {
-                back.click()
-                sleep(350 * random(1, 2))
-            }
-            var close = id('btn_no').findOnce();
-            if (close) {
-                close.click()
-                sleep(350 * random(1, 2))
-            }
-            var close = id('tv_left').findOnce();
-            if (close) {
-                close.click()
-                sleep(350 * random(1, 2))
-            }
+            commons.checkActivity('com.cashvideo.MainTabActivity');
         }
         sleep(350 * random(1, 2));
         jumpToIndex();

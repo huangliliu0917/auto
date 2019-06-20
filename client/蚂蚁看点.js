@@ -4,11 +4,11 @@ const commons = require('common.js');
 var appName = '蚂蚁看点';
 var indexBtnText = "看点"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新";//首页特有的标志文字，重要！
-var totalNewsOneTime = 9;
+var totalNewsOneTime = 12;
 var totalNewsReaded = 0;
 var retry = 0;
 
-var closeIds = ['imgClose', 'iv_close'];
+var closeIds = ['imgClose', 'iv_close', 'ivClose'];
 
 var w = device.width,
     h = device.height;
@@ -18,11 +18,8 @@ function main() {
     commons.launch(appName);
     sleep(1000 * random(1, 2));
     checkClose();
-    awardReport();
-    checkClose();
-    // signIn();
+    signIn();
     while (totalNewsReaded < totalNewsOneTime && retry < 3) {
-        toastLog(222);
         jumpToIndex();
         toastLog('开始刷新');
         sleep(1000 * random(1, 2));
@@ -75,40 +72,42 @@ function main() {
         toastLog(award);
         commons.report(todayAward, award)
         sleep(1000);
-        jumpToIndex();
     }
 
     function signIn() {
         className("android.widget.RelativeLayout").clickable(true).depth(6).findOne().click()
         sleep(3000 * random(1, 2));
         // 关闭广告
-        var ad = id('ivClose').findOnce();
-        if (ad) {
-            ad.click();
-        }
+        checkClose();
+        awardReport();
 
         // 签到
         toastLog('签到')
         sleep(350 * random(1, 2));
-        var needSign = id('tv_today_sign').findOnce();
-        var needSigntext = needSign.text();
-        if (needSigntext.includes('明日')) {
+        var sign = id('tv_today_sign').findOnce();
+        var signText = sign.text();
+        if (signText.includes('更多金币')) {
             toastLog('已签到');
             sleep(1000* random(1, 2));
             jumpToIndex();
             return;
         }
-        var sign = id('tv_sign').findOnce();
         if (sign) {
             sign.click()
         }
         sleep(1000 * random(1, 2));
+        if (!text('立即签到').findOnce) {
+            toastLog('已签到');
+            jumpToIndex();
+            return;
+        }
         click('立即签到');
-        sleep(1000 * random(1, 2));
         // 返回
-        var signBack = text('close').findOnce();
-        if (signBack) {
-            signBack.click();
+        textContains('获得').waitFor();
+        var close = textContains('获得').findOnce();
+        if (close) {
+            close.parent().child(0).click();
+            sleep(1000);
         }
         sleep(1000 * random(1, 2));
         var back = id('iv_back').findOnce()

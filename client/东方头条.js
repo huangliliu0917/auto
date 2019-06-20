@@ -11,7 +11,7 @@ var closeTexts = ['忽略', '忽  略', '继续赚钱'];
 var closeIds = ['img_close', 'a_y', 'f7'];
 var readTitleArray = [];
 
-var totalNewsOneTime = 9;
+var totalNewsOneTime = 12;
 var totalNewsReaded = 0;
 var retry = 0;
 var isFresh = false;

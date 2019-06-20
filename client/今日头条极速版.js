@@ -51,7 +51,7 @@ function main() {
                     text(shareText).waitFor();
                     click(shareText);
                     sleep(700 * random(1, 3));
-                    back();
+                    commons.checkActivity('com.ss.android.article.lite.activity.MainActivity');
                     sleep(300 * random(1, 3))
                     shareCount ++;
                 }

@@ -4,7 +4,7 @@ const commons = require('common.js');
 var appName = '惠头条';
 var indexBtnText = "头条"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新"; //首页特有的标志文字，重要！
-var totalNewsOneTime = 9;
+var totalNewsOneTime = 12; 
 var totalNewsReaded = 0;
 var readTitleArray = [];
 var retry = 0;
@@ -69,28 +69,7 @@ function main() {
         if (sign) {
             sign.click();
             sleep(1000 * random(1, 2))
-            // var isWait = id('content').findOne();
-            var isWait = text('领取中...').findOnce();
-            if (isWait) {
-                toastLog('等待');
-                back();
-                sleep(350 * random(1, 2))
-            }
-            var back = id('tv_back').findOnce();
-            if (back) {
-                back.click()
-                sleep(350 * random(1, 2))
-            }
-            var back = id('iv_back').findOnce();
-            if (back) {
-                back.click()
-                sleep(350 * random(1, 2))
-            }
-            var close = id('tv_left').findOnce();
-            if (close) {
-                close.click()
-                sleep(350 * random(1, 2))
-            }
+            commons.checkActivity('com.cashtoutiao.account.ui.main.MainTabActivity');
         }
         sleep(350 * random(1, 2));
         jumpToIndex();

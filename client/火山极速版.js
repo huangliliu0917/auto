@@ -3,6 +3,9 @@ const commons = require('common.js');
 "auto";
 var appName = '火山极速版';
 
+var totalNewsReaded = 1; //已经阅读的新闻条数
+var totalNewsOneTime = 11; //一次性阅读多少条新闻
+
 var closeIds = ['p1'];
 
 function main() {
@@ -13,7 +16,47 @@ function main() {
     toastLog('签到');
     signIn();
 
+    yun();
+
+    function yun() {
+        while (totalNewsReaded < totalNewsOneTime * random(3, 7)) {
+            checkClose();
+            sb();
+            totalNewsReaded++;
+        }
+
+        function sb() {
+            toastLog('已浏览( ' + totalNewsReaded + ' )个视频');
+            swipe(540, 1600, 540, 200, 700);
+            sleep(15 * 1000 * random(1, 2));
+            if (random(0, 3) < 1) {
+                // 点赞
+                toastLog('点赞,关注');
+                var like = id('lv').findOnce();
+                if (like) {
+                    like.click();
+                    sleep(1000);
+                }
+                sleep(350 * random(1, 2));
+                // 关注
+                if (random(0, 3) < 1) {
+                    var follow = id('m9').findOnce();
+                    if (follow) {
+                        follow.click();
+                        sleep(1000);
+                    }
+                }
+            }
+        }
+    }
+
     function checkClose() {
+        var close = text('以后再说').findOnce();
+        if (close) {
+            toastLog('关闭提示');
+            sleep(1000);
+            close.click()
+        }
         var close = text('javascript:;').findOnce();
         if (close) {
             toastLog('关闭提示');
@@ -30,6 +73,12 @@ function main() {
                 break;
             }
         }
+    }
+
+    function jumpToIndex() {
+        var index = text('视频').findOnce();
+        index.parent().click();
+        sleep(1000);
     }
 
     function signIn() {
@@ -52,9 +101,9 @@ function main() {
                     text(shareText).waitFor();
                     click(shareText);
                     sleep(700 * random(1, 3));
-                    back();
+                    commons.checkActivity('com.ss.android.ugc.live.main.MainActivity');
                     sleep(300 * random(1, 3))
-                    shareCount ++;
+                    shareCount++;
                 }
                 var close = text('javascript:;').findOnce();
                 if (close) {
@@ -63,7 +112,10 @@ function main() {
             }
         }
         checkClose();
+        jumpToIndex();
     }
+
+
 
     function awardReport() {
         toastLog('今日阅读数据');

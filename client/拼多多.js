@@ -14,9 +14,9 @@ function main() {
     // commons.wakeUp();
     // commons.launch(appName);
     // sleep(1000 * random(1, 2));
-    // signIn();
+    signIn();
     // cat();
-    browse();
+    // browse();
     
 
     
@@ -84,10 +84,13 @@ function main() {
     }
 
     function signin() {
-        var sign = text('签到领微信零钱').findOnce();
-        // toastLog(sign);
+        var sign = text('签到领现金').findOnce();
+        toastLog(sign);
         if (sign) {
-            sign.parent().parent().click();
+            toastLog(111);
+            toastLog(sign.parent().clickable());
+            sign.parent().click();
+            sleep(1000);
         }
     }
 
@@ -103,6 +106,8 @@ function main() {
         sleep(3000)
         signin();
         cat();
+        back();
+        back();
     }
 
     function getAward() {

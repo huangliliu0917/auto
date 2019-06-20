@@ -1,15 +1,19 @@
-function report(todayAward, award) {
-    var packageName = currentPackage();
-    var appName = getAppName(packageName);
-    var url = 'http://104.225.144.193:5000/report';
-    var res = http.post(url, {
-        'sign': 'august',
-        'app_name': appName,
-        'package_name': packageName,
-        'today_award': todayAward,
-        'award': award
-    });
-    toastLog(res.body.string());
-}
+const commons = require('common.js');
 
-report(100, 200)
+var signTexts = ['立即签到', '签到', '求好运']
+                    for (var x = 0; x < signTexts.length; x++) {
+                        var signText = signTexts[x]
+                        var sign = text(signText).findOnce();
+                        toastLog(sign);
+                        if (sign) {
+                            sign.click();
+                            if (sign.clickable()) {
+                                sign.click();
+                            } else {
+                                sign.parent().click();
+                            }
+                            sleep(3 * 1000);
+                        }
+                    }
+                    // var sign = text('签到').findOnce();
+                    // toastLog(sign);
