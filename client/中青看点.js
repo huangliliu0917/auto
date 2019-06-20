@@ -9,9 +9,6 @@ var totalNewsReaded = 0;
 
 var closeIds = ['imgClose', 'iv_close', 'ivClose'];
 
-var w = device.width,
-    h = device.height;
-
 function main() {
     commons.wakeUp();
     commons.launch(appName);
@@ -43,9 +40,8 @@ function main() {
                 break;
             }
         }
-        if (id("xj").exists()) {
-            id("xf").findOne().click();
-        }
+        sleep(1000);
+        commons.checkActivity('com.weishang.wxrd.activity.MainActivity')
     }
 
     function signIn() {
@@ -87,6 +83,7 @@ function main() {
             var back = id('iv_back').findOnce()
         }
         sleep(350 * random(1, 2));
+        checkClose();
         jumpToIndex();
 
     }
@@ -123,15 +120,7 @@ function main() {
             list.child(i).click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            for (var j = 0; j < 12; j++) {
-                sleep(1024);
-                swipe(w / 2, h * 0.6, w / 2, h * 0.3, 800);
-                sleep(500);
-                var more = text('查看全文，奖励更多').findOnce();
-                if (more) {
-                    more.parent().click();
-                }
-            }
+            commons.swapeToRead('查看全文，奖励更多', 12);
             checkClose();
             back();
             sleep(300);

@@ -16,10 +16,6 @@ var totalNewsReaded = 0;
 var retry = 0;
 var isFresh = false;
 
-var w = device.width,
-    h = device.height;
-
-
 
 function main() {
     commons.wakeUp();
@@ -126,7 +122,6 @@ function main() {
             sleep(1000);
             return;
         }
-        commons.checkActivity('com.songheng.eastfirst.common.view.activity.MainActivity')
         for (i = 0; i < closeIds.length; i++) {
             var closeId = closeIds[i]
             var isClose = id(closeId).findOnce()
@@ -147,6 +142,7 @@ function main() {
                 break;
             }
         }
+        commons.checkActivity('com.songheng.eastfirst.common.view.activity.MainActivity')
     }
 
     function getTimeAward() {
@@ -242,16 +238,10 @@ function main() {
             ele.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            for (var j = 0; j < 18; j++) {
-                sleep(2 * 1000);
-                swipe(w / 2, h * 0.6, w / 2, h * 0.3, 800);
-                sleep(500);
-                click('点击查看全文');
-                click('点击阅读全文');
-            }
+            commons.swapeToRead('点击查看全文', 12);
             checkClose();
             back();
-            sleep(300);
+            sleep(1000);
         }
         // exit();
     }

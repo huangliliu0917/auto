@@ -38,15 +38,15 @@ template.run = function (fun) {
     /**
      * 自动更新
      */
-    toastLog("自动更新 ===> " + initParam.appName)
-    template.autoUpdate(fun);
-    template.closeTips()
+    // toastLog("自动更新 ===> " + initParam.appName)
+    // template.autoUpdate(fun);
+    // template.closeTips()
 
     /**
      * 回归首页的位置
      */
     toastLog("回到首页 ===> " + initParam.appName)
-    // template.jumpToIndex(fun.getIndexBtnItem);
+    template.jumpToIndex(fun.getIndexBtnItem);
 
     /**
      * 签到
@@ -60,18 +60,18 @@ template.run = function (fun) {
      * 新闻阅读流程
      */
     toastLog("阅读 ===> " + initParam.appName)
-    while (true) {
-        //领取时段奖励
-        template.getTimeAward(fun.doingAfterTimeAward);
-        template.closeTips()
-        //找到一条新闻
-        template.getOneNews(fun.findNewsItem);
-        template.closeTips()
-        //阅读新闻60s
-        template.readNews(60, fun.isShouldBack);
-        //返回新闻列表
-        common.backToIndex(initParam.indexFlagText);
+    if (fun.readNews != null) {
+        fun.readNews();
     }
+    // while (true) {
+    //     // 领取时段奖励
+    //     template.getTimeAward(fun.doingAfterTimeAward);
+    //     template.closeTips()
+    //     // 阅读新闻60s
+    //     template.readNews(60, fun.isShouldBack);
+    //     // 返回新闻列表
+    //     common.backToIndex(initParam.indexFlagText);
+    // }
 }
 
 template.autoUpdate = function (fun) {

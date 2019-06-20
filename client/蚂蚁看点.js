@@ -10,9 +10,6 @@ var retry = 0;
 
 var closeIds = ['imgClose', 'iv_close', 'ivClose'];
 
-var w = device.width,
-    h = device.height;
-
 function main() {
     commons.wakeUp();
     commons.launch(appName);
@@ -149,32 +146,12 @@ function main() {
             ele.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            for (var j = 0; j < 12; j++) {
-                sleep(1024);
-                swipe(w / 2, h * 0.6, w / 2, h * 0.3, 800);
-                sleep(500);
-                var more = text('open').findOnce();
-                if (more) {
-                    more.parent().click();
-                }
-            }
+            commons.swapeToRead('open', 12);
             checkClose();
             back();
             sleep(300);
         }
     }
-
-    function is(parent) {
-        if (parent.childCount() == 0) {
-            if (parent.text() == "\u5e7f\u544a" || parent.text() == "\u7f6e\u9876" || parent.text() == "\u5e7f\u544a\u0020\u2022\u0020\u4e86\u89e3\u8be6\u60c5") return true;
-            return false;
-        }
-        for (var i = 0; i < parent.childCount(); i++) {
-            if (is(parent.child(i))) return true;
-        }
-        return false;
-    }
-
 }
 
 main()

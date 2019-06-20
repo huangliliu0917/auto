@@ -2,23 +2,18 @@ const commons = require('common.js');
 
 "auto";
 var appName = '玩赚星球';
-var indexBtnText = "首页"; //其他页面挑到首页的按钮文字，重要！
-var indexFlagText = "刷新"; //首页特有的标志文字，重要！
 var totalNewsOneTime = 5;
 var totalNewsReaded = 0;
 
 var closeIds = ['iv_delete_lottie', 'iv_delete', 'iv_close'];
 var signTexts = ['立即签到', '签到', '求好运']
 
-var w = device.width,
-    h = device.height;
-
 function main() {
     var registerCount = 0;
     var isTaskEnd = false;
-    // commons.wakeUp();
-    // commons.launch(appName);
-    // sleep(1000 * random(1, 2));
+    commons.wakeUp();
+    commons.launch(appName);
+    sleep(1000 * random(1, 2));
     checkClose();
 
     jumpToMy();
@@ -26,22 +21,21 @@ function main() {
     signIn();
 
     getGold();
-
     getTask();
 
-    // while (totalNewsReaded < totalNewsOneTime) {
-    //     jumpToIndex();
-    //     toastLog('开始刷新');
-    //     sleep(1000 * random(1, 2));
-    //     checkClose();
-    //     // 红包
-    //     sleep(200);
-    //     readNews();
-    //     sleep(300);
-    //     scrollDown(1);
-    //     sleep(500);
-    //     readNews();
-    // }
+    while (totalNewsReaded < totalNewsOneTime) {
+        toastLog('开始刷新');
+        jumpToIndex();
+        sleep(1000 * random(1, 2));
+        checkClose();
+        // 红包
+        sleep(200);
+        readNews();
+        sleep(300);
+        scrollDown(1);
+        sleep(500);
+        readNews();
+    }
 
     function checkClose() {
         sleep(1 * 1000);
@@ -85,8 +79,8 @@ function main() {
     }
 
     function jumpToIndex() {
-        var home = id('bottom_tab_layout').findOnce();
-        home.child(0).child(1).child(0).click()
+        var home = id('tv_main_tab').text('头条').findOnce();
+        home.parent().parent().click()
         sleep(1 * 1000);
     }
 
@@ -98,38 +92,30 @@ function main() {
 
     function readNews() {
         sleep(1000 * random(1, 2));
-        var list = className("android.widget.ListView").findOne();
-        for (var i = 2; i < list.childCount(); i++) {
+        var list = className('android.view.ViewGroup').findOnce()
+        var eles = list.child(1);
+        toastLog(eles.childCount());
+        if (eles.childCount() < 1) {
+            toastLog('未找到文章')
+            return;
+        }
+        for (var i = 0; i < eles.childCount(); i++) {
             sleep(150 * random(1, 2));
             checkClose();
-            if (is(list.child(i))) continue;
-            list.child(i).click();
+            var ele = eles.child(i);
+            var isAd = ele.findOne(textContains('广告'));
+            if (!ele || isAd) {
+                toastLog('跳过广告');
+                continue;
+            }
+            ele.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            for (var j = 0; j < 12; j++) {
-                sleep(1024);
-                swipe(w / 2, h * 0.6, w / 2, h * 0.3, 800);
-                sleep(500);
-                var more = text('查看全文，奖励更多').findOnce();
-                if (more) {
-                    more.parent().click();
-                }
-            }
+            commons.swapeToRead('点击阅读全文', 12);
             checkClose();
             back();
             sleep(300);
         }
-    }
-
-    function is(parent) {
-        if (parent.childCount() == 0) {
-            if (parent.text() == "\u5e7f\u544a" || parent.text() == "\u7f6e\u9876" || parent.text() == "\u5e7f\u544a\u0020\u2022\u0020\u4e86\u89e3\u8be6\u60c5") return true;
-            return false;
-        }
-        for (var i = 0; i < parent.childCount(); i++) {
-            if (is(parent.child(i))) return true;
-        }
-        return false;
     }
 
     function doTask(eles) {
@@ -174,6 +160,10 @@ function main() {
                         }
                     }
                     commons.checkActivity('com.planet.light2345.agentweb.WebViewActivity')
+                    sleep(1000);
+                    if (activity != 'com.planet.light2345.agentweb.WebViewActivity') {
+                        commons.switchRecentApp();
+                    }
                 }
                 back();
                 sleep(3 * 1000);
@@ -191,6 +181,11 @@ function main() {
                 sleep(3 * 1000);
                 commons.checkActivity('com.planet.light2345.agentweb.WebViewActivity')
                 sleep(1000);
+                var activity = currentActivity();
+                if (activity != 'com.planet.light2345.agentweb.WebViewActivity') {
+                    commons.switchRecentApp();
+                }
+                
             }
             toastLog(op);
             toastLog(222);
@@ -255,7 +250,6 @@ function main() {
 
     function getTask() {
         var task = id('title_layout').findOnce();
-        toastLog(task);
         if (task) {
             task.click();
             sleep(3 * 1000);
@@ -277,6 +271,7 @@ function main() {
             }
             back();
         }
+        sleep(1000);
     }
 
     function checkTask() {
@@ -289,6 +284,7 @@ function main() {
                 var eles = className('android.widget.ListView').findOnce(1);
                 for (var i=0; i<eles.childCount();i++) {
                     var ele = eles.child(i);
+                    if (ele.findOne(text('已领取'))) continue;
                     ele.click();
                     sleep(1000);
                     var tip = text('我知道了').findOnce();

@@ -9,9 +9,6 @@ var totalNewsReaded = 0;
 var readTitleArray = [];
 var retry = 0;
 
-var w = device.width,
-    h = device.height;
-
 function main() {
     // readNews();
     commons.wakeUp();
@@ -122,15 +119,7 @@ function main() {
             ele.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            for (var j = 0; j < 12; j++) {
-                sleep(1024);
-                swipe(w / 2, h * 0.6, w / 2, h * 0.3, 800);
-                sleep(500);
-                var more = text('展开全文').findOnce();
-                if (more) {
-                    more.parent().click();
-                }
-            }
+            commons.swapeToRead('展开全文', 12);
             checkClose();
             back();
             sleep(300);
