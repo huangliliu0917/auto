@@ -1,6 +1,10 @@
 {
     "newsAppList": [
         {
+            "name": "玩赚星球",
+            "version": 1
+        },
+        {
             "name": "微鲤看看",
             "version": 1
         },
