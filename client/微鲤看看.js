@@ -103,6 +103,7 @@ function main() {
         for (var i = 3; i < list.childCount(); i++) {
             sleep(150 * random(1, 2));
             var ele = list.child(i);
+            if (!ele) continue;
             if (ele.child(0).childCount() != 2) {
                 toastLog('跳过');
                 continue;
