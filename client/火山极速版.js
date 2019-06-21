@@ -95,6 +95,7 @@ function main() {
                 var share = textContains('分享给朋友再得').findOnce();
                 var shareCount = 0;
                 while (share && shareCount < 3) {
+                    checkClose();
                     share.parent().click();
                     sleep(300 * random(1, 3));
                     var shareText = '去粘贴';

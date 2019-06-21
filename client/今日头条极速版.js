@@ -32,6 +32,11 @@ function main() {
         }
     }
 
+    function jumpToIndex() {
+        var index = id('asa').findOnce();
+        index.parent().click();
+    }
+
     function signIn() {
         var index = text('首页').findOnce();
         if (index) {
@@ -62,6 +67,7 @@ function main() {
             }
         }
         checkClose();
+        jumpToIndex();
     }
 
     function awardReport() {

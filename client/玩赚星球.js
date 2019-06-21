@@ -49,6 +49,11 @@ function main() {
                 break;
             }
         }
+        var close = id('box_close_layout').findOnce();
+        if (close) {
+            toastLog('关闭提示');
+            back();
+        }
     }
 
     function signIn() {
@@ -103,6 +108,7 @@ function main() {
             sleep(150 * random(1, 2));
             checkClose();
             var ele = eles.child(i);
+            if (!ele) continue;
             var isAd = ele.findOne(textContains('广告'));
             if (!ele || isAd) {
                 toastLog('跳过广告');
@@ -132,6 +138,11 @@ function main() {
                 if (skip) {
                     ele = eles.child(1);
                 }
+                var end = ele.findOne(text('使用微鲤看看'));
+                if (end) {
+                    toastLog('结束循环');
+                    break;
+                }
                 ele.click();
                 sleep(3 * 1000);
                 var jump = text('立即领钱').findOnce();
@@ -146,23 +157,30 @@ function main() {
                         if (!sign) {
                             continue;
                         }
-                        if (sign.clickable()) {
-                            sign.click();
-                            sleep(1 * 1000);
-                        } else {
-                            if (sign.parent().clickable()) {
-                                sign.parent().click();
-                                sleep(1 * 1000);
-                            } else {
-                                sign.parent().parent().click();
-                                sleep(1 * 1000);
+                        var signClick = commons.getClickItem(sign);
+                        signClick.click();
+                        if (signText == '求好运') {
+                            var items = id('dialog_sign_choose_tag_grid_view').findOne(2000);
+                            if (items) {
+                                if (random(0, 3) > 1) {
+                                    items.child(2).click();
+                                } else {
+                                    items.child(3).click();
+
+                                }
                             }
                         }
                     }
                     commons.checkActivity('com.planet.light2345.agentweb.WebViewActivity')
                     sleep(1000);
                     if (activity != 'com.planet.light2345.agentweb.WebViewActivity') {
-                        commons.switchRecentApp();
+                        recents();
+                        var app = descStartsWith(appName).findOne(2000)
+                        if (app) {
+                            sleep(1000 * random(1, 3));
+                            app.click();
+                            sleep(1000 * random(2, 3));
+                        }
                     }
                 }
                 back();
@@ -179,13 +197,19 @@ function main() {
                 sleep(3 * 1000);
                 commons.checkOpen();
                 sleep(3 * 1000);
-                commons.checkActivity('com.planet.light2345.agentweb.WebViewActivity')
+                commons.checkActivity('com.planet.light2345.agentweb.WebViewActivity');
                 sleep(1000);
                 var activity = currentActivity();
                 if (activity != 'com.planet.light2345.agentweb.WebViewActivity') {
-                    commons.switchRecentApp();
+                    recents();
+                    var app = descStartsWith(appName).findOne(2000)
+                    if (app) {
+                        app.click();
+                        sleep(3 * 1000);
+                    }
+                    // commons.switchRecentApp();
                 }
-                
+
             }
             toastLog(op);
             toastLog(222);
@@ -201,7 +225,7 @@ function main() {
                     id('done_button').waitFor();
                     id('done_button').click();
                     sleep(3 * 1000);
-                    commons.checkActivity('com.planet.light2345.agentweb.WebViewActivity')
+                    commons.checkActivity('com.planet.light2345.agentweb.WebViewActivity');
                     ele.click();
                     sleep(1000);
                 }
@@ -231,9 +255,11 @@ function main() {
             gold.parent().click();
             sleep(5 * 1000);
             var eles = className('android.widget.ListView').findOnce();
+            if (!eles) {
+                toastLog('没有找到任务');
+                return;
+            }
             while (eles.childCount() > 0 && registerCount != eles.childCount()) {
-                toastLog(registerCount)
-                toastLog(eles.childCount())
                 doTask(eles);
                 var refresh = id('ll_common_toolbar_nav_right').findOnce()
                 if (refresh) {
@@ -241,6 +267,10 @@ function main() {
                     sleep(3 * 1000);
                 }
                 var eles = className('android.widget.ListView').findOnce();
+                if (!eles) {
+                    toastLog('没有找到任务');
+                    break;
+                }
                 sleep(1000);
             }
             back();
@@ -257,11 +287,11 @@ function main() {
             while (eles.childCount() > 0 && !isTaskEnd) {
                 checkTask();
                 if (isTaskEnd) {
-                    toastLog('已完成task')
+                    toastLog('已完成task');
                     break;
                 }
                 doTask(eles);
-                var refresh = id('ll_common_toolbar_nav_right').findOnce()
+                var refresh = id('ll_common_toolbar_nav_right').findOnce();
                 if (refresh) {
                     refresh.click();
                     sleep(3 * 1000);
@@ -278,11 +308,11 @@ function main() {
         var progress = textContains('已完成').findOnce()
         if (progress) {
             var finishText = progress.text().split('/')[0]
-            var finishCount = parseInt(finishText.replace(/[^0-9]/g,""));
+            var finishCount = parseInt(finishText.replace(/[^0-9]/g, ""));
             if (finishCount > 7) {
                 isTaskEnd = true
                 var eles = className('android.widget.ListView').findOnce(1);
-                for (var i=0; i<eles.childCount();i++) {
+                for (var i = 0; i < eles.childCount(); i++) {
                     var ele = eles.child(i);
                     if (ele.findOne(text('已领取'))) continue;
                     ele.click();

@@ -15,6 +15,7 @@ function main() {
     commons.launch(appName);
     sleep(1000 * random(1, 2));
     checkClose();
+    toastLog('签到');
     signIn();
     while (totalNewsReaded < totalNewsOneTime && retry < 3) {
         jumpToIndex();
@@ -32,9 +33,6 @@ function main() {
     }
 
     function checkClose() {
-        if (id("xj").exists()) {
-            id("xf").findOne().click();
-        }
         for (i = 0; i < closeIds.length; i++) {
             var closeId = closeIds[i]
             var isClose = id(closeId).findOnce()
@@ -72,9 +70,15 @@ function main() {
     }
 
     function signIn() {
-        className("android.widget.RelativeLayout").clickable(true).depth(6).findOne().click()
-        sleep(3000 * random(1, 2));
+        var user = id('tv_user_tab').findOnce();
+        if (!user) {
+            toastLog('找不到我的');
+            return;
+        }
+        user.click();
+        id('iv_activity').findOne(5 * 1000)
         // 关闭广告
+        sleep(1000 * random(1, 2));
         checkClose();
         awardReport();
 
@@ -98,7 +102,9 @@ function main() {
             jumpToIndex();
             return;
         }
-        click('立即签到');
+        sleep(1000 * random(1, 2));
+        var sign = text('立即签到').findOnce();
+        sign.click();
         // 返回
         textContains('获得').waitFor();
         var close = textContains('获得').findOnce();

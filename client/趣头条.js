@@ -8,7 +8,7 @@ var indexFlagText = "刷新"; //首页特有的标志文字，重要！
 var totalNewsOneTime = 27;
 var totalNewsReaded = 0;
 
-var closeIds = ['wt', 'fv', 'fw', 'a2m'];
+var closeIds = ['wt', 'fv', 'fw', 'a2m', 'ic'];
 
 var w = device.width,
     h = device.height;
@@ -17,6 +17,8 @@ function main() {
     commons.wakeUp();
     commons.launch(appName);
     sleep(1000 * random(1, 2));
+    checkClose()
+    toastLog('签到');
     signIn();
     sleep(350 * random(1, 2));
     while (totalNewsReaded < totalNewsOneTime) {
@@ -35,24 +37,13 @@ function main() {
     awardReport();
 
     function jumpToIndex() {
-        var index = text(indexFlagText).findOnce()
-        if (index) {
-            toastLog('返回首页');
-            click(indexFlagText);
-            return;
-
-        }
-        var index = text(indexBtnText).findOnce()
-        if (index) {
-            toastLog('返回首页');
-            click(indexBtnText);
-            return;
-
-        }
+        var index = id('jr').findOnce();
+        index.click();
     }
 
     function signIn() {
-        click('任务');
+        var task = id('jv').findOnce();
+        task.click();
         sleep(1000 * random(1, 2));
         var isClose = id('aeg').findOnce();
         if (isClose) {
@@ -94,7 +85,6 @@ function main() {
     }
 
     function checkClose() {
-        commons.checkActivity('com.jifen.qkbase.main.MainActivity');
         for (i = 0; i < closeIds.length; i++) {
             var closeId = closeIds[i]
             var isClose = id(closeId).findOnce()
@@ -111,6 +101,7 @@ function main() {
             click(closeText);
             sleep(350);
         }
+        commons.checkActivity('com.jifen.qkbase.main.MainActivity');
     }
 
     function is(parent) {

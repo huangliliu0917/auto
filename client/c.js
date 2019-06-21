@@ -1,6 +1,15 @@
 const commons = require('common.js');
 
-var t = id('a9b').findOnce();
-// var path = '/sdcard/3.jpg';
-commons.centerClick(t)
-toastLog(t);
+// var t = text('刷新').findOnce();
+// commons.checkActivity('com');
+// // var path = '/sdcard/3.jpg';
+// commons.centerClick(t)
+// commons.switchRecentApp()
+// recents();
+// KeyCode('KEYCODE_DPAD_DOWN');
+// commons.switchRecentApp()
+toastLog(111);
+        var close = id('box_close_layout').findOnce();
+        if (close) {
+            back();
+        }

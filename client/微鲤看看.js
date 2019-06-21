@@ -13,6 +13,8 @@ function main() {
     commons.launch(appName);
     sleep(1000 * random(1, 2));
     checkClose();
+    toastLog('签到');
+    // signIn();
     while (totalNewsReaded < totalNewsOneTime && retry < 3) {
         jumpToIndex();
         toastLog('开始刷新');
@@ -39,9 +41,6 @@ function main() {
             toastLog('关闭提示');
             close.click();
             return;
-        }
-        if (id("xj").exists()) {
-            id("xf").findOne().click();
         }
     }
 

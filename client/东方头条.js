@@ -28,7 +28,7 @@ function main() {
 
     awardReport();
 
-    // signIn();
+    signIn();
     sleep(1000 * random(1, 2));
     jumpToIndex();
 

@@ -15,8 +15,8 @@ function main() {
     commons.launch(appName);
     sleep(1000 * random(1, 2));
     checkClose();
-    // toastLog('签到');
-    // signIn();
+    toastLog('签到');
+    signIn();
     toastLog('开始刷新');
     // awardReport();
     jumpToIndex();
