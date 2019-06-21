@@ -216,8 +216,9 @@ function main() {
                     id('done_button').click();
                     sleep(3 * 1000);
                     swithToApp(appName);
-                    ele.click();
-                    sleep(1000);
+                    break;
+                }
+                if (activity != 'com.planet.light2345.agentweb.WebViewActivity') {
                     commons.checkOpen();
                     sleep(1000);
                     swithToApp(appName);
