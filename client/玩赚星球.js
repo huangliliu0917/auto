@@ -199,17 +199,7 @@ function main() {
                 sleep(3 * 1000);
                 commons.checkActivity('com.planet.light2345.agentweb.WebViewActivity');
                 sleep(1000);
-                var activity = currentActivity();
-                if (activity != 'com.planet.light2345.agentweb.WebViewActivity') {
-                    recents();
-                    var app = descStartsWith(appName).findOne(2000)
-                    if (app) {
-                        app.click();
-                        sleep(3 * 1000);
-                    }
-                    // commons.switchRecentApp();
-                }
-
+                swithToApp(appName);
             }
             toastLog(op);
             toastLog(222);
@@ -225,15 +215,18 @@ function main() {
                     id('done_button').waitFor();
                     id('done_button').click();
                     sleep(3 * 1000);
-                    commons.checkActivity('com.planet.light2345.agentweb.WebViewActivity');
+                    swithToApp(appName);
                     ele.click();
                     sleep(1000);
+                    commons.checkOpen();
+                    sleep(1000);
+                    swithToApp(appName);
+                    break;
                 }
-                commons.checkOpen();
                 var retry = 0;
                 while (retry < 1800) {
                     var activity = currentActivity();
-                    if (activity == 'com.planet.light2345.agentweb.WebViewActivity') {
+                    if (activity == 'com.android.packageinstaller.PackageInstallerActivity') {
                         toastLog(activity);
                         sleep(3 * 1000);
                         commons.install();
@@ -326,6 +319,18 @@ function main() {
                     }
                 }
 
+            }
+        }
+    }
+
+    function swithToApp(appName) {
+        var activity = currentActivity();
+        if (activity != 'com.planet.light2345.agentweb.WebViewActivity') {
+            recents();
+            var app = descStartsWith(appName).findOne(2000)
+            if (app) {
+                app.click();
+                sleep(3 * 1000);
             }
         }
     }
