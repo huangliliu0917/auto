@@ -18,7 +18,7 @@ function main() {
     sleep(1000 * random(1, 2));
     checkClose();
     toastLog('签到');
-    // signIn();
+    signIn();
     sleep(1000 * random(1, 2));
     while (totalNewsReaded < totalNewsOneTime && retry < 3) {
         toastLog('开始刷新');

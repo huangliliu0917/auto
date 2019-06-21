@@ -88,8 +88,7 @@ function main() {
         toastLog(sign);
         if (sign) {
             toastLog(111);
-            toastLog(sign.parent().clickable());
-            sign.parent().click();
+            commons.centerClick(sign);
             sleep(1000);
         }
     }

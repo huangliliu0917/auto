@@ -9,7 +9,3 @@ const commons = require('common.js');
 // KeyCode('KEYCODE_DPAD_DOWN');
 // commons.switchRecentApp()
 toastLog(111);
-        var close = id('box_close_layout').findOnce();
-        if (close) {
-            back();
-        }

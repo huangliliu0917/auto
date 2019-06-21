@@ -41,7 +41,7 @@ function main() {
             }
         }
         sleep(1000);
-        commons.checkActivity('com.weishang.wxrd.activity.MainActivity')
+        // commons.checkActivity('com.weishang.wxrd.activity.MainActivity')
     }
 
     function signIn() {
