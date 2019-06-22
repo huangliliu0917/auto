@@ -4,7 +4,7 @@ const commons = require('common.js');
 var appName = '淘头条';
 var indexBtnText = "首页"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新"; //首页特有的标志文字，重要！
-var totalNewsOneTime = 12;
+var totalNewsOneTime = 3;
 var totalNewsReaded = 0;
 var homeActivity = 'com.sohu.quicknews.homeModel.activity.HomeActivity'
 
@@ -27,6 +27,7 @@ function main() {
         readNews();
     }
     checkClose();
+    toastLog('签到');
     signIn();
 
     function checkClose() {
@@ -55,7 +56,7 @@ function main() {
         if (task) {
             task.click();
             sleep(3 * 1000)
-            var sign = id('btn_sign').text('立即签到');
+            var sign = id('btn_sign').text('立即签到').findOnce();
             if (sign) {
                 sign.click();
                 sleep(3 * 1000)
@@ -92,6 +93,7 @@ function main() {
                 continue;
             }
             var accountName = ele.findOne(id('tv_topnews_timeandsource'));
+            // toastLog(accountName);
             if (!accountName) {
                 toastLog('跳过广告');
                 continue;
