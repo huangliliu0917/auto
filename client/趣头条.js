@@ -5,7 +5,7 @@ const commons = require('common.js');
 var appName = '趣头条';
 var indexBtnText = "头条"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新"; //首页特有的标志文字，重要！
-var totalNewsOneTime = 27;
+var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
 
 var closeIds = ['wt', 'fv', 'fw', 'a2m', 'ic'];

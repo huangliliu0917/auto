@@ -4,7 +4,7 @@ const commons = require('common.js');
 var appName = '搜狐资讯';
 var indexBtnText = "首页"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新"; //首页特有的标志文字，重要！
-var totalNewsOneTime = 12;
+var totalNewsOneTime = 20;
 var totalNewsReaded = 0;
 var homeActivity = 'com.sohu.quicknews.homeModel.activity.HomeActivity'
 
