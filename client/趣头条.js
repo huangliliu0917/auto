@@ -37,12 +37,12 @@ function main() {
     awardReport();
 
     function jumpToIndex() {
-        var index = id('jr').findOnce();
+        var index = id('js').findOnce();
         index.click();
     }
 
     function signIn() {
-        var task = id('jv').findOnce();
+        var task = id('jw').findOnce();
         task.click();
         sleep(1000 * random(1, 2));
         var isClose = id('aeg').findOnce();

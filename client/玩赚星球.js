@@ -117,7 +117,11 @@ function main() {
             ele.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            commons.swapeToRead('点击阅读全文', 12);
+            try {
+                commons.swapeToRead('点击阅读全文', 12);
+            } catch(err) {
+                toastLog('阅读出错');
+            }
             checkClose();
             back();
             sleep(300);
