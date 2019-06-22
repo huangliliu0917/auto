@@ -67,22 +67,11 @@ function main() {
         if (sign) {
             sign.click()
         }
-        sleep(1000 * random(1, 2));
+        sleep(1000 * random(3, 5));
         click('立即签到');
         sleep(1000 * random(1, 2));
         // 返回
-        var signBack = text('close').findOnce();
-        if (signBack) {
-            signBack.click();
-        }
-        sleep(1000 * random(1, 2));
-        while (back) {
-            // toastLog(back);
-            back.click();
-            sleep(1000);
-            var back = id('iv_back').findOnce()
-        }
-        sleep(350 * random(1, 2));
+        commons.checkActivity('com.weishang.wxrd.activity.MainActivity');
         checkClose();
         jumpToIndex();
 

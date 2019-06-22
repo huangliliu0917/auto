@@ -3,7 +3,7 @@ const commons = require('common.js');
 "auto";
 var appName = '微鲤看看';
 var indexBtnText = "头条"; //其他页面挑到首页的按钮文字，重要！
-var indexFlagText = "头条";//首页特有的标志文字，重要！
+var indexFlagText = "头条"; //首页特有的标志文字，重要！
 var totalNewsOneTime = 12;
 var totalNewsReaded = 0;
 var retry = 0;
@@ -45,49 +45,20 @@ function main() {
     }
 
     function signIn() {
-        className("android.widget.RelativeLayout").clickable(true).depth(6).findOne().click()
-        sleep(3000 * random(1, 2));
-        // 关闭广告
-        var ad = id('ivClose').findOnce();
-        if (ad) {
-            ad.click();
-        }
-
-        // 签到
-        toastLog('签到')
-        sleep(350 * random(1, 2));
-        var needSign = id('tv_today_sign').findOnce();
-        var needSigntext = needSign.text();
-        if (needSigntext.includes('明日')) {
-            toastLog('已签到');
-            sleep(1000* random(1, 2));
-            jumpToIndex();
+        var sign = id('rl_head_line').findOnce();
+        if (sign && sign.findOne(text('签到'))) {
+            sign.click();
+            sleep(3 * 1000)
+            sign = text('立即签到').findOnce();
+            sign.click();
+            sleep(1000);
+            commons.checkActivity('cn.etouch.ecalendar.MainActivity');
+        } else {
+            toastLog('已签到')
             return;
         }
-        var sign = id('tv_sign').findOnce();
-        if (sign) {
-            sign.click()
-        }
-        sleep(1000 * random(1, 2));
-        click('立即签到');
-        sleep(1000 * random(1, 2));
-        // 返回
-        var signBack = text('close').findOnce();
-        if (signBack) {
-            signBack.click();
-        }
-        sleep(1000 * random(1, 2));
-        var back = id('iv_back').findOnce()
-        // toastLog(back);
-        if (back) {
-            back.click();
-            sleep(1000 * random(1, 2));
-            back.click();
-        }
-        sleep(350 * random(1, 2));
-        jumpToIndex();
-
     }
+
 
     function jumpToIndex() {
         var home = id('rl_bottom_1').findOnce();

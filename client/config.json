@@ -1,15 +1,11 @@
 {
     "newsAppList": [
         {
-            "name": "玩赚星球",
+            "name": "淘头条",
             "version": 1
         },
         {
             "name": "微鲤看看",
-            "version": 1
-        },
-        {
-            "name": "天天看视频",
             "version": 1
         },
         {
@@ -28,47 +24,49 @@
             "version": 1
         },
         {
-            "name": "惠视频",
-            "version": 1
-        },
-        {
             "name": "中青看点",
             "package": "cn.youth.news",
-            "version": 1
-        },
-        {
-            "name": "刷宝短视频",
-            "package": "com.jm.video",
             "version": 1
         }
     ],
     "videoAppList": [
         {
-        "name": "趣头条",
-        "package": "com.jifen.qukan",
-        "version": 1
+            "name": "天天看视频",
+            "version": 1
+        },
+        {
+            "name": "惠视频",
+            "version": 1
         }
     ],
     "dayTaskList": [
+        {
+            "name": "玩赚星球",
+            "hour": 4
+        },
+        {
+            "name": "搜狐资讯",
+            "hour": 4
+        },
         {
             "name": "day_task",
             "hour": 0.1
         },
         {
+            "name": "刷宝短视频",
+            "hour": 4
+        },
+        {
             "name": "趣头条",
-            "package": "com.jifen.qukan",
-            "version": 1,
-            "hour": 24
+            "hour": 4
         },
         {
             "name": "火山极速版",
-            "version": 1,
-            "hour": 24
+            "hour": 6
         },
         {
             "name": "今日头条极速版",
-            "version": 1,
-            "hour": 24
+            "hour": 6
         }
     ]
 }
