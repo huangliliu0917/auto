@@ -142,6 +142,7 @@ function main() {
                 if (skip) {
                     ele = eles.child(1);
                 }
+                // toastLog(ele.findOne(textContains('微鲤看看')));
                 var end = ele.findOne(text('使用微鲤看看'));
                 if (end) {
                     toastLog('结束循环');
@@ -248,6 +249,7 @@ function main() {
     }
 
     function getGold() {
+        text('领金币').waitFor();
         var gold = text('领金币').findOnce();
         if (gold) {
             gold.parent().click();
@@ -277,6 +279,7 @@ function main() {
     }
 
     function getTask() {
+        id('title_layout').waitFor();
         var task = id('title_layout').findOnce();
         if (task) {
             task.click();

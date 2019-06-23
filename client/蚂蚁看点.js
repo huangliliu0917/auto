@@ -104,6 +104,10 @@ function main() {
         }
         sleep(1000 * random(1, 2));
         var sign = text('立即签到').findOnce();
+        if (!sign) {
+            toastLog('找不到签到');
+            return;
+        }
         sign.click();
         // 返回
         textContains('获得').waitFor();

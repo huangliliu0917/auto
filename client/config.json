@@ -9,6 +9,18 @@
             "version": 1
         },
         {
+            "name": "全民头条",
+            "version": 1
+        },
+        {
+            "name": "波波视频",
+            "version": 1
+        },
+        {
+            "name": "种子视频",
+            "version": 1
+        },
+        {
             "name": "东方头条",
             "package": "com.songheng.eastnews",
             "version": 1
