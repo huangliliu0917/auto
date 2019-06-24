@@ -82,16 +82,16 @@ function main() {
         for (var i = 0; i < eles.childCount(); i++) {
             sleep(150 * random(1, 2));
             checkClose();
-            var ele = eles.child(i);
-            if (!ele) continue;
-            var red = ele.findOne(id('energy_open'));
+            var red = id('energy_open').findOnce();
             if (red) {
                 toastLog('获取奖励');
                 checkClose();
                 red.click();
                 sleep(1000);
-                continue;
+                checkClose();
             }
+            var ele = eles.child(i);
+            if (!ele) continue;
             var isAd = ele.findOne(text('广告'));
             if (isAd) {
                 toastLog('跳过广告');

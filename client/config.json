@@ -1,12 +1,8 @@
 {
     "newsAppList": [
         {
-            "name": "玩赚星球",
-            "hour": 4
-        },
-        {
             "name": "搜狐资讯",
-            "hour": 4
+            "version": 1
         },
         {
             "name": "淘头条",
@@ -59,10 +55,14 @@
             "version": 1
         }
     ],
-    "dayTaskList": [
+    "taskList": [
         {
-            "name": "day_task",
-            "hour": 0.1
+            "name": "玩赚星球",
+            "hour": 4
+        },
+        {
+            "name": "拼多多",
+            "hour": 24
         },
         {
             "name": "刷宝短视频",
@@ -70,7 +70,7 @@
         },
         {
             "name": "趣头条",
-            "hour": 4
+            "hour": 6
         },
         {
             "name": "火山极速版",

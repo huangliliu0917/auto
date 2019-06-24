@@ -8,7 +8,7 @@ var totalNewsOneTime = 20;
 var totalNewsReaded = 0;
 var homeActivity = 'com.sohu.quicknews.homeModel.activity.HomeActivity'
 
-var closeIds = ['btn_close']
+var closeIds = ['btn_close', 'btn_double_reward_toast_start']
 
 function main() {
     commons.wakeUp();

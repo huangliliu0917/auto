@@ -8,7 +8,7 @@ var signText = '签到领红包';
 var timeAwardText = '领取';
 
 var closeTexts = ['忽略', '忽  略', '继续赚钱'];
-var closeIds = ['img_close', 'a_y', 'f7', 'wu'];
+var closeIds = ['img_close', 'a_y', 'f7', 'wu', 'u_'];
 var readTitleArray = [];
 
 var totalNewsOneTime = 20;

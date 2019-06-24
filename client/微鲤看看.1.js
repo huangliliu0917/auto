@@ -3,57 +3,92 @@ const templates = require('template.js');
 
 
 templates.init({
-    appName:"微鲤看看",
-    indexFlagText:"发布",
-    timeAwardText:"签到",
+    appName: "微鲤看看",
+    indexFlagText: "发布",
+    timeAwardText: "签到",
+    totalNewsOneTime: 20,
+    totalNewsReaded: 0,
+    retry: 0,
+    tipIds: ['imgClose', 'iv_close'],
+    activity: 'cn.etouch.ecalendar.MainActivity'
 });
 
 templates.run({
-    //获取首页按钮
-    getIndexBtnItem:function(){
-        return id("rl_bottom_1").findOnce();
+    jumpToIndex: function () {
+        var home = id('rl_bottom_1').findOnce();
+        home.click();
+        sleep(1000 * random(2, 3));
+        return;
     },
-    //签到
-    signIn:function(){
-        commons.UIClick("rl_bottom_4");
-        sleep(1000);
-        commons.UIClick("ll_not_sign");
-        var t =  id('ll_not_sign').findOnce();
-        toastLog(t);
-        sleep(1000);
-        back();
-        sleep(1000);
-        commons.UIClick("rl_bottom_1");
-    },
-    //找出新闻的条目
-    findNewsItem:function(){
+    readNews: function () {
+        while (initParam.totalNewsReaded < initParam.totalNewsOneTime && initParam.retry < 10) {
+            templates.closeTips();
+            toastLog('开始刷新');
+            this.jumpToIndex();
+            this.getNews();
+            commons.scrollDownByHuman();
+            this.getNews();
+            commons.scrollDownByHuman();
+            this.getNews();
+            initParam.retry++;
+        };
+        signIn();
 
-        //领取宝藏
-        commons.UIClick("text_ok");
-        commons.UIClick("bt_ok");
-
-        var newsItem = id("tv_title").findOnce(1);
-        //判断是否是广告
-        if(newsItem){
-            newsItem = newsItem.parent();
-            var adFlag = newsItem.child(1);
-            if(adFlag && adFlag.text() == "广告"){
-                newsItem = null;
+        function signIn() {
+            var sign = id('rl_head_line').findOnce();
+            if (sign && sign.findOne(text(initParam.timeAwardText))) {
+                sign.click();
+                sleep(3 * 1000)
+                sign = text('立即签到').findOnce();
+                sign.click();
+                sleep(1000);
+                commons.checkActivity(initParam.activity);
+            } else {
+                toastLog('已签到');
+                sleep(1000);
+                return;
             }
         }
-        return newsItem;
     },
-    //时段奖励之后执行
-    doingAfterTimeAward:function(){
-        back();
-    },
-    //阅读页面是否应该返回
-    isShouldBack:function(){
-
-        //领取宝藏
-        commons.UIClick("text_ok");
-        commons.UIClick("bt_ok");
-
-        return false;
+    getNews: function () {
+        var list = className("android.support.v7.widget.RecyclerView").findOnce();
+        if (!list) {
+            toastLog('未找到文章');
+            sleep(1000);
+            return;
+        }
+        for (var i = 3; i < list.childCount(); i++) {
+            var ele = list.child(i);
+            if (!ele) continue;
+            if (ele.childCount() < 1) continue;
+            if (ele.child(0).childCount() != 2) {
+                toastLog('跳过');
+                continue;
+            }
+            var accountName = ele.find(id('tv_chat_room_tag'))
+            if (!accountName) {
+                toastLog('跳过广告或置顶');
+                continue;
+            }
+            var t = ele.child(0).child(1);
+            if (!t.clickable()) {
+                toastLog('跳过');
+                continue;
+            }
+            // var hasRead = templates.checkReadTitle(ele, 'yy');
+            // if (hasRead) {
+            //     toastLog('已阅读');
+            //     continue;
+            // }
+            templates.closeTips();
+            t.click();
+            totalNewsReaded++;
+            toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
+            commons.swapeToRead('展开查看全文', 12);
+            templates.closeTips();
+            back();
+            sleep(350 * random(1, 3));
+        }
+        sleep(1000);
     }
 });

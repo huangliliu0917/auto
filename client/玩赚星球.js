@@ -5,7 +5,7 @@ var appName = '玩赚星球';
 var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
 
-var closeIds = ['iv_delete_lottie', 'iv_delete', 'iv_close'];
+var closeIds = ['iv_delete_lottie', 'iv_delete', 'iv_close', 'll_common_toolbar_back'];
 var signTexts = ['立即签到', '签到', '求好运']
 
 function main() {
@@ -21,6 +21,7 @@ function main() {
     signIn();
 
     getGold();
+    checkClose();
     getTask();
 
     while (totalNewsReaded < totalNewsOneTime) {
@@ -257,6 +258,7 @@ function main() {
             var eles = className('android.widget.ListView').findOnce();
             if (!eles) {
                 toastLog('没有找到任务');
+                back();
                 return;
             }
             while (eles.childCount() > 0 && registerCount != eles.childCount()) {

@@ -88,7 +88,7 @@ function main() {
         toastLog(sign);
         if (sign) {
             toastLog(111);
-            commons.centerClick(sign);
+            click('签到领现金');
             sleep(1000);
         }
     }
@@ -104,7 +104,6 @@ function main() {
         waitForActivity('com.xunmeng.pinduoduo.activity.NewPageActivity');
         sleep(3000)
         signin();
-        cat();
         back();
         back();
     }
