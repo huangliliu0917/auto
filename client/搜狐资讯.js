@@ -9,7 +9,7 @@ var totalNewsReaded = 0;
 var activity = 'com.sohu.quicknews.homeModel.activity.HomeActivity'
 var readTitleArray = [];
 
-var closeIds = ['btn_receive']
+var closeIds = ['btn_receive', 'act_close_image']
 
 function main() {
     commons.wakeUp();
