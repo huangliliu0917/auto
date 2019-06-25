@@ -21,7 +21,12 @@ templates.run({
         return;
     },
     readNews: function () {
-        while (initParam.totalNewsReaded < initParam.totalNewsOneTime && initParam.retry < 10) {
+        toastLog(templates)
+        toastLog(111);
+        toastLog(this.totalNewsOneTime)
+        toastLog(templates.appName)
+        while (templates.totalNewsReaded < templates.totalNewsOneTime && templates.retry < 10) {
+            toastLog(222);
             templates.closeTips();
             toastLog('开始刷新');
             this.jumpToIndex();
@@ -30,19 +35,19 @@ templates.run({
             this.getNews();
             commons.scrollDownByHuman();
             this.getNews();
-            initParam.retry++;
+            templates.retry++;
         };
         signIn();
 
         function signIn() {
             var sign = id('rl_head_line').findOnce();
-            if (sign && sign.findOne(text(initParam.timeAwardText))) {
+            if (sign && sign.findOne(text(templates.timeAwardText))) {
                 sign.click();
                 sleep(3 * 1000)
                 sign = text('立即签到').findOnce();
                 sign.click();
                 sleep(1000);
-                commons.checkActivity(initParam.activity);
+                commons.checkActivity(templates.activity);
             } else {
                 toastLog('已签到');
                 sleep(1000);

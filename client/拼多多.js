@@ -11,9 +11,9 @@ var w = device.width,
     h = device.height;
 
 function main() {
-    // commons.wakeUp();
-    // commons.launch(appName);
-    // sleep(1000 * random(1, 2));
+    commons.wakeUp();
+    commons.launch(appName);
+    sleep(1000 * random(1, 2));
     signIn();
     // cat();
     // browse();
@@ -91,6 +91,12 @@ function main() {
             click('签到领现金');
             sleep(1000);
         }
+        var award = text('点击领取').findOnce();
+        if (award) {
+            award.click();
+            sleep(3000);
+            back();
+        }
     }
 
 
@@ -104,6 +110,7 @@ function main() {
         waitForActivity('com.xunmeng.pinduoduo.activity.NewPageActivity');
         sleep(3000)
         signin();
+        sleep(5000)
         back();
         back();
     }
