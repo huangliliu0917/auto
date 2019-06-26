@@ -8,10 +8,12 @@ var signText = '签到领红包';
 var timeAwardText = '领取';
 
 var closeTexts = ['忽略', '忽  略', '继续赚钱'];
-var closeIds = ['img_close', 'a_y', 'f7', 'wu', 'u_', 'wg'];
+// var closeIds = ['img_close', 'a_y', 'f7', 'wu', 'u_', 'wg', 'tt_video_ad_close', 'x_', 'akh'];
+var closeIds = ['img_close', 'a_y', 'f7', 'wu', 'wg', 'tt_video_ad_close', 'tt_titlebar_close', 'x_', 'akh'];
 var readTitleArray = [];
+var homeActivity = 'com.songheng.eastfirst.common.view.activity.MainActivity';
 
-var totalNewsOneTime = 20;
+var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
 var retry = 0;
 var isFresh = false;
@@ -32,19 +34,24 @@ function main() {
     sleep(1000 * random(1, 2));
     jumpToIndex();
 
-    while (totalNewsReaded < totalNewsOneTime && retry < 3) {
+    while (totalNewsReaded < totalNewsOneTime && retry < 10) {
         checkClose();
         toastLog('开始刷新');
         jumpToIndex();
         toastLog('获取时段奖励');
         getTimeAward();
+        checkClose();
         isFresh = false;
         var scrollRetry = 0;
         // 判断是否找到上次刷新的地方,重试3次
         while (!isFresh && scrollRetry < 3) {
-            sleep(350);
-            scrollDown(1);
-            sleep(350 * random(1, 2));
+            checkClose();
+            sleep(350 * random(1, 3));
+            readNews();
+            sleep(350 * random(1, 3));
+            commons.swapeToRead('', 1);
+            checkClose();
+            sleep(350 * random(1, 3));
             readNews();
             scrollRetry++;
         }
@@ -116,6 +123,11 @@ function main() {
     }
 
     function checkClose() {
+        // var closeRetry = 0;
+        // var activity = currentActivity();
+        // while (closeRetry < 10 && homeActivity != activity) {
+        // var content = id('content').findOnce();
+        // if (content) {
         var isClose = text('立即领取').findOnce();
         if (isClose) {
             back();
@@ -126,7 +138,7 @@ function main() {
             var closeId = closeIds[i]
             var isClose = id(closeId).findOnce()
             if (isClose) {
-                toastLog('关闭提示');
+                toastLog('关闭提示' + ' closeId > ' + closeId);
                 sleep(1000);
                 isClose.click();
                 break;
@@ -142,7 +154,6 @@ function main() {
                 break;
             }
         }
-        commons.checkActivity('com.songheng.eastfirst.common.view.activity.MainActivity')
     }
 
     function getTimeAward() {
@@ -186,6 +197,7 @@ function main() {
     }
 
     function readNews() {
+        checkClose();
         var eles = className("android.support.v7.widget.RecyclerView").findOnce();
         if (!eles) {
             toastLog('未找到文章');
@@ -208,6 +220,13 @@ function main() {
             }
             var ele = eles.child(i);
             if (!ele) continue;
+            var red = text('拆红包').findOnce();
+            if (red) {
+                ele.click();
+                sleep(3000);
+                checkClose();
+                continue;
+            }
             var title = ele.findOne(id('oq'));
             if (title) {
                 toastLog(title.text());
@@ -238,7 +257,7 @@ function main() {
             ele.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            commons.swapeToRead('点击查看全文', 12);
+            commons.swapeToRead('点击阅读全文', 16);
             checkClose();
             back();
             sleep(1000);

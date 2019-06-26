@@ -13,10 +13,6 @@
             "version": 1
         },
         {
-            "name": "全民头条",
-            "version": 1
-        },
-        {
             "name": "东方头条",
             "package": "com.songheng.eastnews",
             "version": 1

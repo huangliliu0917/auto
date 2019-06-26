@@ -4,6 +4,7 @@ const commons = require('common.js');
 var appName = '玩赚星球';
 var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
+var retry = 0;
 
 var closeIds = ['iv_delete_lottie', 'iv_delete', 'iv_close', 'll_common_toolbar_back'];
 var signTexts = ['立即签到', '签到', '求好运']
@@ -24,18 +25,19 @@ function main() {
     checkClose();
     getTask();
 
-    while (totalNewsReaded < totalNewsOneTime) {
+    while (totalNewsReaded < totalNewsOneTime && retry < 10) {
         toastLog('开始刷新');
         jumpToIndex();
         sleep(1000 * random(1, 2));
         checkClose();
-        // 红包
         sleep(200);
         readNews();
         sleep(300);
-        scrollDown(1);
+        // scrollDown(1);
+        commons.scrollUpByHuman();
         sleep(500);
         readNews();
+        retry++;
     }
 
     function checkClose() {
@@ -119,7 +121,7 @@ function main() {
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
             try {
-                commons.swapeToRead('点击阅读全文', 12);
+                commons.swapeToRead('点击阅读全文', 16);
             } catch(err) {
                 toastLog('阅读出错');
             }

@@ -7,6 +7,7 @@ var indexBtnText = "头条"; //其他页面挑到首页的按钮文字，重要�
 var indexFlagText = "刷新"; //首页特有的标志文字，重要！
 var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
+var retry = 0;
 
 var closeIds = ['wt', 'fv', 'fw', 'a2m', 'ic'];
 
@@ -21,7 +22,7 @@ function main() {
     toastLog('签到');
     signIn();
     sleep(350 * random(1, 2));
-    while (totalNewsReaded < totalNewsOneTime) {
+    while (totalNewsReaded < totalNewsOneTime && retry < 10) {
         checkClose();
         toastLog('开始刷新');
         jumpToIndex();
@@ -29,9 +30,11 @@ function main() {
         getTimeAward();
         readNews();
         sleep(300);
-        scrollDown(1);
+        // scrollDown(1);
+        commons.scrollUpByHuman();
         sleep(500);
         readNews();
+        retry++;
     }
     // 最后上报
     awardReport();

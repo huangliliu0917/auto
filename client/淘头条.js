@@ -4,9 +4,10 @@ const commons = require('common.js');
 var appName = '淘头条';
 var indexBtnText = "首页"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新"; //首页特有的标志文字，重要！
-var totalNewsOneTime = 20;
+var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
 var homeActivity = 'com.sohu.quicknews.homeModel.activity.HomeActivity'
+var retry = 0;
 
 var closeIds = ['btn_close', 'btn_double_reward_toast_start']
 
@@ -15,7 +16,7 @@ function main() {
     commons.launch(appName);
     sleep(1000 * random(1, 2));
     checkClose();
-    while (totalNewsReaded < totalNewsOneTime) {
+    while (totalNewsReaded < totalNewsOneTime && retry < 10) {
         checkClose();
         jumpToIndex();
         toastLog('开始刷新');
@@ -23,9 +24,11 @@ function main() {
         sleep(200);
         readNews();
         sleep(300);
-        scrollDown(1);
+        // scrollDown(1);
+        commons.scrollUpByHuman();
         sleep(500);
         readNews();
+        retry++;
     }
     checkClose();
     toastLog('签到');
@@ -112,7 +115,7 @@ function main() {
             ele.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            commons.swapeToRead('展开阅读全文', 12);
+            commons.swapeToRead('展开阅读全文', 16);
             checkClose();
             back();
             sleep(300);

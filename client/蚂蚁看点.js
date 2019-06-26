@@ -4,7 +4,7 @@ const commons = require('common.js');
 var appName = '蚂蚁看点';
 var indexBtnText = "看点"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新";//首页特有的标志文字，重要！
-var totalNewsOneTime = 20;
+var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
 var retry = 0;
 
@@ -17,7 +17,7 @@ function main() {
     checkClose();
     toastLog('签到');
     signIn();
-    while (totalNewsReaded < totalNewsOneTime && retry < 3) {
+    while (totalNewsReaded < totalNewsOneTime && retry < 10) {
         checkClose();
         toastLog('开始刷新');
         jumpToIndex();
@@ -27,7 +27,8 @@ function main() {
         sleep(200);
         readNews();
         sleep(300);
-        scrollDown(1);
+        // scrollDown(1);
+        commons.scrollUpByHuman();
         sleep(500);
         readNews();
         retry++;
@@ -167,7 +168,7 @@ function main() {
             ele.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            commons.swapeToRead('open', 12);
+            commons.swapeToRead('open', 16);
             checkClose();
             back();
             sleep(300);

@@ -4,7 +4,7 @@ const commons = require('common.js');
 var appName = '微鲤看看';
 var indexBtnText = "头条"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "头条"; //首页特有的标志文字，重要！
-var totalNewsOneTime = 20;
+var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
 var retry = 0;
 
@@ -15,14 +15,15 @@ function main() {
     checkClose();
     toastLog('签到');
     // signIn();
-    while (totalNewsReaded < totalNewsOneTime && retry < 3) {
+    while (totalNewsReaded < totalNewsOneTime && retry < 10) {
         jumpToIndex();
         toastLog('开始刷新');
         sleep(1000 * random(1, 2));
         checkClose();
         readNews();
         sleep(300);
-        scrollDown(1);
+        // scrollDown(1);
+        commons.scrollUpByHuman();
         sleep(500);
         readNews();
         retry++;
@@ -93,7 +94,7 @@ function main() {
             t.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            commons.swapeToRead('展开查看全文', 12);
+            commons.swapeToRead('展开查看全文', 16);
             back();
             sleep(300);
         }

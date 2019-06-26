@@ -4,7 +4,7 @@ const commons = require('common.js');
 var appName = '惠头条';
 var indexBtnText = "头条"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新"; //首页特有的标志文字，重要！
-var totalNewsOneTime = 20; 
+var totalNewsOneTime = 30; 
 var totalNewsReaded = 0;
 var readTitleArray = [];
 var retry = 0;
@@ -21,14 +21,15 @@ function main() {
     // awardReport();
     jumpToIndex();
     sleep(1000 * random(1, 2));
-    while (totalNewsReaded < totalNewsOneTime && retry < 20) {
+    while (totalNewsReaded < totalNewsOneTime && retry < 10) {
         sleep(1000 * random(1, 2));
         toastLog('获取时段奖励');
         getTimeAward();
         checkClose();
         sleep(1000 * random(1, 2));
         readNews();
-        scrollDown(1);
+        // scrollDown(1);
+        commons.scrollUpByHuman();
         readNews();
         retry++;
     }
@@ -119,7 +120,7 @@ function main() {
             ele.click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            commons.swapeToRead('展开全文', 12);
+            commons.swapeToRead('展开全文', 16);
             checkClose();
             back();
             sleep(300);

@@ -4,7 +4,7 @@ const commons = require('common.js');
 var appName = '惠视频';
 var indexBtnText = "首页"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "首页";//首页特有的标志文字，重要！
-var totalNewsOneTime = 20;
+var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
 var retry = 0;
 var closeTexts = ['忽略', '忽  略', '继续赚钱'];
@@ -20,7 +20,7 @@ function main() {
     toastLog('签到');
     signIn();
     sleep(1000 * random(1, 2));
-    while (totalNewsReaded < totalNewsOneTime && retry < 3) {
+    while (totalNewsReaded < totalNewsOneTime && retry < 10) {
         toastLog('开始刷新');
         jumpToIndex();
         sleep(1000 * random(1, 2));
@@ -29,7 +29,8 @@ function main() {
         checkClose();
         sleep(1000 * random(1, 2));
         readNews();
-        scrollDown(1);
+        // scrollDown(1);
+        commons.scrollUpByHuman();
         readNews();
         retry++;
     }

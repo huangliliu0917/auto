@@ -4,8 +4,9 @@ const commons = require('common.js');
 var appName = '中青看点';
 var indexBtnText = "首页"; //其他页面挑到首页的按钮文字，重要！
 var indexFlagText = "刷新"; //首页特有的标志文字，重要！
-var totalNewsOneTime = 20; 
+var totalNewsOneTime = 30; 
 var totalNewsReaded = 0;
+var retry = 0;
 
 var closeIds = ['imgClose', 'iv_close', 'ivClose'];
 
@@ -15,18 +16,18 @@ function main() {
     sleep(1000 * random(1, 2));
     checkClose();
     signIn();
-    while (totalNewsReaded < totalNewsOneTime) {
+    while (totalNewsReaded < totalNewsOneTime && retry < 10) {
         jumpToIndex();
         toastLog('开始刷新');
         sleep(1000 * random(1, 2));
         checkClose();
-        // 红包
         sleep(200);
         readNews();
         sleep(300);
-        scrollDown(1);
+        commons.scrollUpByHuman();
         sleep(500);
         readNews();
+        retry++;
     }
 
     function checkClose() {
@@ -109,7 +110,7 @@ function main() {
             list.child(i).click();
             totalNewsReaded++;
             toastLog('已浏览( ' + totalNewsReaded + ' )篇文章');
-            commons.swapeToRead('查看全文，奖励更多', 12);
+            commons.swapeToRead('查看全文，奖励更多', 16);
             checkClose();
             back();
             sleep(300);
