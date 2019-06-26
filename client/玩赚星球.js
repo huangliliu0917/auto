@@ -6,7 +6,7 @@ var totalNewsOneTime = 30;
 var totalNewsReaded = 0;
 var retry = 0;
 
-var closeIds = ['iv_delete_lottie', 'iv_delete', 'iv_close', 'll_common_toolbar_back'];
+var closeIds = ['iv_delete_lottie', 'iv_delete', 'iv_close', 'll_common_toolbar_back', 'bt_cancle_update'];
 var signTexts = ['立即签到', '签到', '求好运']
 
 function main() {
@@ -53,6 +53,11 @@ function main() {
             }
         }
         var close = id('box_close_layout').findOnce();
+        if (close) {
+            toastLog('关闭提示');
+            back();
+        }
+        var close = text('发现新版本').findOnce();
         if (close) {
             toastLog('关闭提示');
             back();
@@ -134,6 +139,7 @@ function main() {
     function doTask(eles) {
         for (i = 0; i < eles.childCount(); i++) {
             var ele = eles.child(0);
+            if (!ele) continue;
             if (ele.findOne(textContains('全部完成'))) {
                 registerCount++;
                 continue;
