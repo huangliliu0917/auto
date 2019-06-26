@@ -6,7 +6,7 @@ var totalNewsOneTime = 20;
 var totalNewsReaded = 0;
 var retry = 0;
 var closeTexts = [];
-var closeIds = ['aeo'];
+var closeIds = ['aeo', 'a7y', 'b08'];
 var activity = 'com.kg.v1.MainActivity';
 
 function main() {

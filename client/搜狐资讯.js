@@ -48,6 +48,10 @@ function main() {
 
     function signIn() {
         var bar = id('footer_view').findOnce();
+        if (!bar) {
+            toastLog('找不到导航栏');
+            return;
+        }
         var user = bar.child(3);
         if (user) {
             user.click();

@@ -112,6 +112,7 @@ function main() {
         signin();
         sleep(5000)
         back();
+        sleep(1000);
         back();
     }
 
